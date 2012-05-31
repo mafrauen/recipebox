@@ -1,0 +1,19 @@
+navigation
+
+root: '/'
+new recipe: '/new'
+back should go to /, with new recipe removed
+
+root
+new
+save
+recipes/1
+back should go to /, but with the recipe saved?
+
+
+root
+new
+recipes/2
+# should new item be there?
+
+
