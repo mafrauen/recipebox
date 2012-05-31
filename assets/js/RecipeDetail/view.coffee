@@ -1,6 +1,3 @@
-tmpl = (id) ->
-  jade.compile ($ id).text()
-
 class RecipeDetailView extends Backbone.View
   template: '<p>hey these are the instructions</p>'
 
@@ -21,18 +18,18 @@ class RecipeDetailView extends Backbone.View
 
 
 class ShowRecipeView extends Backbone.View
-  showTemplate: tmpl('#recipeDetail')
+  template: Handlebars.templates.recipeDetail
 
   initialize: ->
     @model.on 'change', @render
 
   render: =>
-    @$el.html @showTemplate recipe: @model.toJSON()
+    @$el.html @template @model.toJSON()
     @
 
 
 class NewRecipeView extends Backbone.View
-  formTemplate: tmpl('#recipeForm')
+  template: Handlebars.templates.recipeForm
 
   events:
     'click #save': 'save'
@@ -40,7 +37,7 @@ class NewRecipeView extends Backbone.View
     'keyup #name': 'changeName'
 
   render: =>
-    @$el.html @formTemplate recipe: @model.toJSON()
+    @$el.html @template @model.toJSON()
     @addIngredient()
     @
 
@@ -77,10 +74,10 @@ class NewRecipeView extends Backbone.View
 
 class IngredientView extends Backbone.View
   tagName: 'li'
-  ingredientTemplate: tmpl('#ingredientForm')
+  template: Handlebars.templates.ingredientForm
 
   render: =>
-    @$el.html @ingredientTemplate recipe: @model.toJSON()
+    @$el.html @template @model.toJSON()
     @
 
 

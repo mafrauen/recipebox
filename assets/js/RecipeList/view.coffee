@@ -1,6 +1,3 @@
-tmpl = (id) ->
-  jade.compile ($ id).text()
-
 class CookbookView extends Backbone.View
   tagName: 'ul'
 
@@ -32,7 +29,7 @@ class CookbookView extends Backbone.View
 class RecipeListView extends Backbone.View
   tagName: 'li'
   className: 'recipe'
-  template: tmpl('#recipeView')
+  template: Handlebars.templates.recipeView
 
   events:
     'click': 'clicked'
@@ -43,8 +40,7 @@ class RecipeListView extends Backbone.View
     @model.bind 'destroy', @remove
 
   render: =>
-    el = @template(recipe: @model.toJSON())
-    @$el.html el
+    @$el.html @template @model.toJSON()
     @
 
   clicked: =>

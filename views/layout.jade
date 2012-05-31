@@ -5,12 +5,4 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
     != body
-    script(id='recipeView', type='text/template')
-      include templates/recipe.tmpl
-    script(id='recipeDetail', type='text/template')
-      include templates/recipeDetail.tmpl
-    script(id='recipeForm', type='text/template')
-      include templates/recipeForm.tmpl
-    script(id='ingredientForm', type='text/template')
-      include templates/ingredientForm.tmpl
     != js('application')
