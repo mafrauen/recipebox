@@ -1,5 +1,5 @@
 class RecipeDetailView extends Backbone.View
-  template: '<p>hey these are the instructions</p>'
+  template: '<h1>Select a recipe from the left or create a new one!</h1>'
 
   initialize: ->
     @collection.on 'add', @form
