@@ -17,3 +17,10 @@ recipes/2
 # should new item be there?
 
 
+Redis:
+recipe:1 - hash
+  name, 
+recipe:1:ingredients - list of strings
+  all ingredients, including measurements
+recipe:1:foods - set of id's
+  all types of food in this recipe
