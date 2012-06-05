@@ -1,9 +1,9 @@
 # Single User Recipe Box
 
-### What
+## What
 A simple CRUD app for recipes, like an online cookbook
 
-### How
+## How
 * Server
   * node.js [site][url_node]
   * express.js [site][url_express]
@@ -17,11 +17,11 @@ A simple CRUD app for recipes, like an online cookbook
 * Both
   * CoffeeScript [site][url_coffeescript]
 
-### Where
+## Where
 The project is hosted with [nodejitsu][url_nodejitsu] here:
 [http://recipebox.jit.su][url_demo]
 
-### Why
+## Why
 To learn more about Backbone and other client side technologies.
 
 
