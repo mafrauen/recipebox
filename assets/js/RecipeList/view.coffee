@@ -33,11 +33,11 @@ class RecipeListView extends Backbone.View
 
   events:
     'click': 'clicked'
+    'click .remove': 'clear'
 
-  initialize: ->
+  initialize: =>
     @model.bind 'change:name', @render
     @model.bind 'recipe:selected', @showActive
-    @model.bind 'destroy', @remove
 
   render: =>
     @$el.html @template @model.toJSON()
@@ -46,9 +46,13 @@ class RecipeListView extends Backbone.View
   clicked: =>
     @model.trigger 'recipe:selected', @model
 
-  showActive:  =>
+  showActive: =>
     $('.recipe.active').removeClass 'active'
     @$el.addClass 'active'
+
+  clear: =>
+    @model.destroy()
+    @remove()
 
 
 window.CookbookView = CookbookView

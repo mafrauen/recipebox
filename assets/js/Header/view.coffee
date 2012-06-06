@@ -1,9 +1,9 @@
 class HeaderView extends Backbone.View
   events:
-    'click input': 'newRecipe'
+    'click button': 'newRecipe'
 
   render: =>
-    @$el.html "<input id='newRecipe' type='button' value='New Recipe'/>"
+    @$el.html "<button id='newRecipe'>New Recipe</button>"
     @
 
   newRecipe: =>

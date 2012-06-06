@@ -1,8 +1,20 @@
 recipe = (app, redis) =>
 
   recipes = []
-  redis.get 'id:recipe', (err, cnt) ->
-    getById [1..cnt] if cnt > 0
+  redis.smembers 'recipes', (err, ids) ->
+    getById ids
+
+  getById = (ids) ->
+    keys = ("recipe:#{id}" for id in ids)
+
+    multi = redis.multi()
+    for key in keys
+      multi.hgetall key, (err, res) ->
+        recipes.push res
+      multi.lrange "#{key}:ingredients", 0, -1, (err, res) ->
+        recipes[recipes.length-1].ingredients = res
+    multi.exec()
+
 
   renderApp = (req, res) ->
     res.render 'index', title: 'My Recipes'
@@ -21,19 +33,14 @@ recipe = (app, redis) =>
         id: id
         name: req.body.name
       redis.lpush "#{key}:ingredients", req.body.ingredients
+      redis.sadd "recipes", id
 
       res.send id: id
 
+  app.delete '/api/recipes/:id', (req, res) ->
+    id = req.params.id
+    redis.srem 0, id
+    redis.del "recipe:#{id}", "recipe:#{id}:ingredients"
 
-  getById = (ids) ->
-    keys = ("recipe:#{id}" for id in ids)
-
-    multi = redis.multi()
-    for key in keys
-      multi.hgetall key, (err, res) ->
-        recipes.push res
-      multi.lrange "#{key}:ingredients", 0, -1, (err, res) -> 
-        recipes[recipes.length-1].ingredients = res
-    multi.exec()
 
 module.exports = recipe

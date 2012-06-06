@@ -9,7 +9,6 @@ var express = require('express')
   , RedisStore = require('connect-redis')(express)
   , client = require('./redis-config')();
 
-console.log('clinet', client);
 var app = module.exports = express.createServer();
 
 // Configuration

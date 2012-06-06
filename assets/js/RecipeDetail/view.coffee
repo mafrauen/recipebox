@@ -72,6 +72,7 @@ class NewRecipeView extends Backbone.View
     ingredients = (el.value.trim() for el in @$('.ingredient') when el.value.trim().length > 0)
     @model.save ingredients: ingredients
 
+
 class IngredientView extends Backbone.View
   tagName: 'li'
   template: Handlebars.templates.ingredientForm

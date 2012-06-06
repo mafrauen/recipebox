@@ -8,23 +8,44 @@ a {
   position: fixed;
   width: 250px;
   overflow-y: auto;
-  top: 30px;
+  top: 50px;
   bottom: 10px;
   left: 20px;
   -webkit-overflow-scrolling: touch;
 }
-#new {
+#header {
   padding-left: 50px;
 }
-#content {
-  margin: 20px 0 20px 320px;
+#header #newRecipe {
+  padding: 5px 15px;
+  border-radius: 5px;
+  font-size: 14px;
+  border: 0;
+  margin: 20px 0px;
+  text-shadow: #fff 1px 1px 6px;
 }
-.recipe {
+#content {
+  margin: -20px 0 20px 320px;
+}
+li {
+  display: block;
+  cursor: pointer;
+}
+li.recipe {
   height: 50px;
   padding: 0 15px;
   line-height: 50px;
   border-bottom: 1px solid #d2d2d1;
 }
-.recipe.active {
+li.recipe.active {
   background: #94e5ec;
+}
+li.recipe .remove {
+  right: 10px;
+  position: absolute;
+  display: none;
+}
+li.recipe:hover .remove,
+li.recipe.active .remove {
+  display: inline;
 }
