@@ -1,6 +1,6 @@
 {
   "name": "recipebox",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "private": true,
   "dependencies": {
     "express": "2.5.8",
@@ -14,7 +14,7 @@
   },
   "subdomain": "recipebox",
   "scripts": {
-    "start": "./bin/dev"
+    "start": "server.js"
   },
   "engines": {
     "node": "0.6.x"

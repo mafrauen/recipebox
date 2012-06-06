@@ -69,7 +69,7 @@ class NewRecipeView extends Backbone.View
     @$('#newIngredients').append new IngredientView(model: @model).render().el
 
   save: =>
-    ingredients = (el.value.trim() for el in @$('.ingredient'))
+    ingredients = (el.value.trim() for el in @$('.ingredient') when el.value.trim().length > 0)
     @model.save ingredients: ingredients
 
 class IngredientView extends Backbone.View

@@ -6,10 +6,10 @@
 require('coffee-script');
 
 var express = require('express')
-  , redis = require('redis')
-  , redisConfig = require('./redis-config')(redis)
-  , RedisStore = require('connect-redis')(express);
+  , RedisStore = require('connect-redis')(express)
+  , client = require('./redis-config')();
 
+console.log('clinet', client);
 var app = module.exports = express.createServer();
 
 // Configuration
@@ -22,7 +22,7 @@ app.configure(function(){
   app.use(express.cookieParser());
   app.use(express.session({
     secret: 'this is my secret'
-   ,store: new RedisStore(redis)
+   ,store: new RedisStore({client: client})
   }));
   app.use(require('stylus').middleware({ src: __dirname + '/public' }));
   app.use(require('connect-assets')());
@@ -39,7 +39,7 @@ app.configure('production', function(){
 });
 
 // Routes
-require('./routes/recipe')(app, redisConfig.db);
+require('./routes/recipe')(app, client);
 
 app.listen(3000, function(){
   console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);

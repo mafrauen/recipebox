@@ -1,16 +1,30 @@
-config = (redis) =>
+redis = require 'redis'
+
+config = ->
+  port = 9158
+  host = 'fish.redistogo.com'
+  auth = '344c860b048c9eabb5e4e2eb1825437d'
+
   setupDevelopment = ->
-    @db = redis.createClient()
-    @db.select 0
-    return @
+    # local host
+    db = redis.createClient()
+    return db
+
   setupProduction = ->
-    @db = redis.createClient(9629, 'panga.redistogo.com')
-    @db.auth '7e5effe44367678feead73ec2f26ee5b'
-    @db.select 2
-    return @
+    # use nodejitsu settings
+    db = redis.createClient(port, host)
+    db.auth auth
+    return db
+
 
   switch process.env.NODE_ENV
-    when 'development' then setupDevelopment()
-    when 'production' then setupProduction()
+    when 'production'
+      setupProduction()
+    else
+      setupDevelopment()
 
 module.exports = config
+
+
+# redis://nodejitsu:344c860b048c9eabb5e4e2eb1825437d@fish.redistogo.com:9158/
+# redis://mafrauen:7e5effe44367678feead73ec2f26ee5b@panga.redistogo.com:9629/
