@@ -39,7 +39,7 @@ recipe = (app, redis) =>
 
   app.delete '/api/recipes/:id', (req, res) ->
     id = req.params.id
-    redis.srem 0, id
+    redis.srem 'recipes', 0, id
     redis.del "recipe:#{id}", "recipe:#{id}:ingredients"
 
 
