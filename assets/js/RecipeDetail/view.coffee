@@ -2,9 +2,10 @@ class RecipeDetailView extends Backbone.View
   template: '<h1>Select a recipe from the left or create a new one!</h1>'
 
   initialize: ->
-    @collection.on 'add', @form
+    @collection.on 'add', @new
     @collection.on 'recipe:selected sync', @show
     @collection.on 'destroy', @clear
+    @collection.on 'recipe:edit', @edit
 
   render: =>
     @visible = null
@@ -15,9 +16,14 @@ class RecipeDetailView extends Backbone.View
     @visible = recipe
     @$el.html new ShowRecipeView(model: recipe).render().el if recipe.get 'id'
 
-  form: (recipe) =>
+  new: (recipe) =>
     @visible = recipe
     @$el.html new NewRecipeView(model: recipe).render().el
+    @$('#name').focus()
+
+  edit: (recipe) =>
+    @visible = recipe
+    @$el.html new EditRecipeView(model: recipe).render().el
     @$('#name').focus()
 
   clear: (recipe) =>
@@ -27,12 +33,18 @@ class RecipeDetailView extends Backbone.View
 class ShowRecipeView extends Backbone.View
   template: Handlebars.templates.recipeDetail
 
+  events:
+    'dblclick': 'edit'
+
   initialize: ->
     @model.on 'change', @render
 
   render: =>
     @$el.html @template @model.toJSON()
     @
+
+  edit: =>
+    @model.trigger 'recipe:edit', @model
 
 
 class RecipeFormView extends Backbone.View
@@ -67,13 +79,12 @@ class RecipeFormView extends Backbone.View
 
   makeBlankIngredintAvailable: =>
     ingredients = (@$(el).val().trim() for el in @$('#newIngredients .ingredient'))
-    console.log ingredients
 
     hasBlank = '' in ingredients
     @addIngredient() unless hasBlank
 
-  addIngredient: =>
-    ingredient = new Ingredient()
+  addIngredient: (ingredient) =>
+    ingredient = ingredient || new Ingredient()
     @$('#newIngredients').append new IngredientView(model: ingredient).render().el
 
   save: =>
@@ -85,6 +96,13 @@ class NewRecipeView extends RecipeFormView
   render: =>
     super()
     @addIngredient()
+    @
+
+class EditRecipeView extends RecipeFormView
+  render: =>
+    super()
+    @addIngredient new Ingredient name: ingredient for ingredient in @model.get 'ingredients'
+    @addIngredient() # make sure there is a blank available
     @
 
 class IngredientView extends Backbone.View
