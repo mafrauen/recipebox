@@ -16,6 +16,11 @@ A simple CRUD app for recipes, like an online cookbook
   * HTML5 pushState
 * Both
   * CoffeeScript [site][url_coffeescript]
+* [Redis][url_redis] database with the following data structures:
+  * Hash - to store a recipe and top level attributes (name, id, eventually rating, etc.)
+  * Set - to store all recipe ids
+  * List - to store ingredients for a single recipe
+  * Value - to hold the next id for a new recipe
 
 ## Where
 The project is hosted with [nodejitsu][url_nodejitsu] here:
@@ -33,5 +38,6 @@ To learn more about Backbone and other client side technologies.
 [url_jquery]: http://www.jquery.com
 [url_handlebars]: http://handlebarsjs.com/
 [url_coffeescript]: http://www.coffeescript.org
+[url_redis]: http://redis.io
 [url_nodejitsu]: http://www.nodejitsu.com
 [url_demo]: http://recipebox.jit.su
