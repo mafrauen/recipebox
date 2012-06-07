@@ -2,9 +2,6 @@ recipe = (app, redis) =>
 
   recipes = []
   redis.smembers 'recipes', (err, ids) ->
-    getById ids
-
-  getById = (ids) ->
     keys = ("recipe:#{id}" for id in ids)
 
     multi = redis.multi()
@@ -34,13 +31,31 @@ recipe = (app, redis) =>
         name: req.body.name
       redis.hmset key, recipe
 
-      redis.lpush "#{key}:ingredients", req.body.ingredients
+      redis.rpush "#{key}:ingredients", req.body.ingredients
       redis.sadd "recipes", id
 
       recipe.ingredients = req.body.ingredients
       recipes.push recipe
 
+      #return to backbone any attributes that changed on the server
       res.send id: id
+
+
+  app.put '/api/recipes/:id', (req, res) ->
+    id = req.params.id
+    key = "recipe:#{id}"
+
+    redis.hset key, 'name', req.body.name
+    ingKey = "#{key}:ingredients"
+    redis.del ingKey
+    redis.rpush ingKey, req.body.ingredients
+
+    for recipe in recipes when recipe.id is id
+      recipe.name = req.body.name
+      recipe.ingredients = req.body.ingredients
+
+    res.send {}
+
 
   app.delete '/api/recipes/:id', (req, res) ->
     id = req.params.id
