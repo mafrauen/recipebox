@@ -4,17 +4,24 @@ class RecipeDetailView extends Backbone.View
   initialize: ->
     @collection.on 'add', @form
     @collection.on 'recipe:selected sync', @show
+    @collection.on 'destroy', @clear
 
   render: =>
+    @visible = null
     @$el.html @template
     @
 
   show: (recipe) =>
+    @visible = recipe
     @$el.html new ShowRecipeView(model: recipe).render().el if recipe.get 'id'
 
   form: (recipe) =>
+    @visible = recipe
     @$el.html new NewRecipeView(model: recipe).render().el
     @$('#name').focus()
+
+  clear: (recipe) =>
+    @render() if recipe is @visible
 
 
 class ShowRecipeView extends Backbone.View
@@ -43,7 +50,6 @@ class NewRecipeView extends Backbone.View
 
   changeName: =>
     name = @$('#name').val().trim()
-    name = @model.defaults.name unless name.length
     @model.set name: name
 
   ingredientType: (e) =>
@@ -61,15 +67,16 @@ class NewRecipeView extends Backbone.View
     @$('#newIngredients .ingredient:not(:last)').filter(':text[value=""]').parent().remove()
 
   makeBlankIngredintAvailable: =>
-    ingredients = (el.value.trim() for el in @$('#newIngredients .ingredient'))
+    ingredients = (el.val().trim() for el in @$('#newIngredients .ingredient'))
     hasBlank = '' in ingredients
     @addIngredient() unless hasBlank
 
   addIngredient: =>
-    @$('#newIngredients').append new IngredientView(model: @model).render().el
+    ingredient = new Ingredient()
+    @$('#newIngredients').append new IngredientView(model: ingredient).render().el
 
   save: =>
-    ingredients = (el.value.trim() for el in @$('.ingredient') when el.value.trim().length > 0)
+    ingredients = (el.val().trim() for el in @$('.ingredient') when el.val().trim().length > 0)
     @model.save ingredients: ingredients
 
 
@@ -78,7 +85,8 @@ class IngredientView extends Backbone.View
   template: Handlebars.templates.ingredientForm
 
   render: =>
-    @$el.html @template @model.toJSON()
+    @$el.html @template
+      ingredient: @model.get 'name'
     @
 
 

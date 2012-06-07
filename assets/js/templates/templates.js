@@ -2,10 +2,16 @@
   var template = Handlebars.template, templates = Handlebars.templates = Handlebars.templates || {};
 templates['ingredientForm'] = template(function (Handlebars,depth0,helpers,partials,data) {
   helpers = helpers || Handlebars.helpers;
-  var foundHelper, self=this;
+  var buffer = "", stack1, foundHelper, self=this, functionType="function", helperMissing=helpers.helperMissing, undef=void 0, escapeExpression=this.escapeExpression;
 
 
-  return "<input placeholder=\"Ingredient\" type=\"text\" class=\"ingredient\" />\n";});
+  buffer += "<input placeholder=\"Ingredient\" type=\"text\" class=\"ingredient\" value='";
+  foundHelper = helpers.ingredient;
+  stack1 = foundHelper || depth0.ingredient;
+  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
+  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "ingredient", { hash: {} }); }
+  buffer += escapeExpression(stack1) + "' />\n";
+  return buffer;});
 templates['recipeDetail'] = template(function (Handlebars,depth0,helpers,partials,data) {
   helpers = helpers || Handlebars.helpers;
   var buffer = "", stack1, foundHelper, tmp1, self=this, functionType="function", helperMissing=helpers.helperMissing, undef=void 0, escapeExpression=this.escapeExpression, blockHelperMissing=helpers.blockHelperMissing;
@@ -39,10 +45,16 @@ function program1(depth0,data) {
   return buffer;});
 templates['recipeForm'] = template(function (Handlebars,depth0,helpers,partials,data) {
   helpers = helpers || Handlebars.helpers;
-  var foundHelper, self=this;
+  var buffer = "", stack1, foundHelper, self=this, functionType="function", helperMissing=helpers.helperMissing, undef=void 0, escapeExpression=this.escapeExpression;
 
 
-  return "<input id=\"name\" type=\"text\" placeholder='Recipe Name' />\n<ul id=\"newIngredients\"></ul>\n<input id=\"save\" type=\"button\" value=\"Save\" />\n";});
+  buffer += "<input id=\"name\" type=\"text\" placeholder='Recipe Name' value='";
+  foundHelper = helpers.name;
+  stack1 = foundHelper || depth0.name;
+  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
+  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "name", { hash: {} }); }
+  buffer += escapeExpression(stack1) + "' />\n<ul id=\"newIngredients\"></ul>\n<input id=\"save\" type=\"button\" value=\"Save\" />\n";
+  return buffer;});
 templates['recipeView'] = template(function (Handlebars,depth0,helpers,partials,data) {
   helpers = helpers || Handlebars.helpers;
   var buffer = "", stack1, foundHelper, self=this, functionType="function", helperMissing=helpers.helperMissing, undef=void 0, escapeExpression=this.escapeExpression;

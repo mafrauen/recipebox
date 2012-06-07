@@ -1,8 +1,11 @@
+class Ingredient extends Backbone.Model
+  defaults:
+    name: ''
+
 class Recipe extends Backbone.Model
   defaults:
-    name: 'New Recipe'
+    name: ''
     ingredients: []
-
 
 class Cookbook extends Backbone.Collection
   model: Recipe
@@ -11,3 +14,4 @@ class Cookbook extends Backbone.Collection
 
 window.Recipe = Recipe
 window.Cookbook = Cookbook
+window.Ingredient = Ingredient

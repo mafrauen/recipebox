@@ -29,11 +29,16 @@ recipe = (app, redis) =>
   app.post '/api/recipes', (req, res) ->
     redis.incr 'id:recipe', (err, id) ->
       key = "recipe:#{id}"
-      redis.hmset key,
+      recipe =
         id: id
         name: req.body.name
+      redis.hmset key, recipe
+
       redis.lpush "#{key}:ingredients", req.body.ingredients
       redis.sadd "recipes", id
+
+      recipe.ingredients = req.body.ingredients
+      recipes.push recipe
 
       res.send id: id
 
@@ -42,5 +47,7 @@ recipe = (app, redis) =>
     redis.srem 'recipes', 0, id
     redis.del "recipe:#{id}", "recipe:#{id}:ingredients"
 
+    index = idx for rec, idx in recipes when rec.id is id
+    recipes.splice index, 1
 
 module.exports = recipe

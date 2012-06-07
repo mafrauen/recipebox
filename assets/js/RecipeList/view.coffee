@@ -40,7 +40,11 @@ class RecipeListView extends Backbone.View
     @model.bind 'recipe:selected', @showActive
 
   render: =>
-    @$el.html @template @model.toJSON()
+    name = (@model.toJSON()).name
+    name = 'New Recipe' unless name.length
+
+    @$el.html @template
+      name: name
     @
 
   clicked: =>

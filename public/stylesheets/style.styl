@@ -2,6 +2,9 @@ body
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif
 a
   color: #00B7FF
+li
+  display block
+
 
 #recipes
   position: fixed
@@ -12,38 +15,38 @@ a
   left: 20px
   -webkit-overflow-scrolling: touch
 
-
-#header
-  padding-left: 50px
-  #newRecipe
-    padding 5px 15px
-    border-radius 5px
-    font-size 14px
-    border 0
-    margin 20px 0px
-    text-shadow white 1px 1px 6px
-
-#content
-  margin: -20px 0 20px 320px
-
-li
-  display block
+#recipes li
   cursor pointer
 
-li.recipe
+#recipes li.recipe
   height 50px
   padding 0 15px
   line-height 50px
   border-bottom 1px solid #D2D2D1
 
-li.recipe.active
+#recipes li.recipe.active
   background #94E5EC
 
-li.recipe .remove
+#recipes li.recipe .remove
   right 10px
   position absolute
   display none
 
-li.recipe:hover .remove
-li.recipe.active .remove
+#recipes li.recipe:hover .remove
+#recipes li.recipe.active .remove
   display inline
+
+button
+  padding 5px 15px
+  border-radius 5px
+  font-size 14px
+  border 0
+  margin 20px 0px
+  text-shadow white 1px 1px 6px
+
+#header
+  padding-left: 50px
+
+#content
+  margin: -20px 0 20px 320px
+
