@@ -35,7 +35,7 @@ class ShowRecipeView extends Backbone.View
     @
 
 
-class NewRecipeView extends Backbone.View
+class RecipeFormView extends Backbone.View
   template: Handlebars.templates.recipeForm
 
   events:
@@ -45,7 +45,6 @@ class NewRecipeView extends Backbone.View
 
   render: =>
     @$el.html @template @model.toJSON()
-    @addIngredient()
     @
 
   changeName: =>
@@ -67,7 +66,9 @@ class NewRecipeView extends Backbone.View
     @$('#newIngredients .ingredient:not(:last)').filter(':text[value=""]').parent().remove()
 
   makeBlankIngredintAvailable: =>
-    ingredients = (el.val().trim() for el in @$('#newIngredients .ingredient'))
+    ingredients = (@$(el).val().trim() for el in @$('#newIngredients .ingredient'))
+    console.log ingredients
+
     hasBlank = '' in ingredients
     @addIngredient() unless hasBlank
 
@@ -76,9 +77,15 @@ class NewRecipeView extends Backbone.View
     @$('#newIngredients').append new IngredientView(model: ingredient).render().el
 
   save: =>
-    ingredients = (el.val().trim() for el in @$('.ingredient') when el.val().trim().length > 0)
+    ingredients = (@$(el).val().trim() for el in @$('.ingredient') when @$(el).val().trim().length > 0)
     @model.save ingredients: ingredients
 
+
+class NewRecipeView extends RecipeFormView
+  render: =>
+    super()
+    @addIngredient()
+    @
 
 class IngredientView extends Backbone.View
   tagName: 'li'
