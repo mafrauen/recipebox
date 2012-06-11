@@ -29,6 +29,22 @@ The project is hosted with [nodejitsu][url_nodejitsu] here:
 ## Why
 To learn more about Backbone and other client side technologies.
 
+# TODO
+* Ratings
+  * Per recipe
+  * Sorted set for all recipes
+  * Making recipe increments score
+  * Changing recipe rating appropriately adjusts score
+* Styling
+* Add field for location (cookbook page or link)
+* Discard edit
+  * On cancel button or esc
+  * Just fetch recipe again?
+* Recipe Search
+  * By name or ingredient
+* Remove cache
+* Store raw ingredients
+  * Determine which is gluten free
 
 [url_node]: http://www.nodejs.org
 [url_express]: http://www.expressjs.com
