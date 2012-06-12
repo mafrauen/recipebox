@@ -1,17 +1,9 @@
 recipe = (app, redis) =>
 
-  recipes = []
-  redis.smembers 'recipes', (err, ids) ->
-    keys = ("recipe:#{id}" for id in ids)
-
-    multi = redis.multi()
-    for key in keys
-      multi.hgetall key, (err, res) ->
-        recipes.push res
-      multi.lrange "#{key}:ingredients", 0, -1, (err, res) ->
-        recipes[recipes.length-1].ingredients = res
-    multi.exec()
-
+  key = (id) ->
+    "recipe:#{id}"
+  ingredients = (id) ->
+    "#{key(id)}:ingredients"
 
   renderApp = (req, res) ->
     res.render 'index', title: 'My Recipes'
@@ -21,7 +13,19 @@ recipe = (app, redis) =>
   app.get '/recipes/:id', renderApp
 
   app.get '/api/recipes', (req, res) ->
-    res.send recipes
+    redis.zrevrange 'recipes', 0, -1, (err, ids) ->
+      command = redis.multi()
+      command.hgetall key(id) for id in ids
+      command.exec (err, recipes) ->
+        res.send recipes
+
+  app.get '/api/recipes/:id', (req, res) ->
+    id = req.params.id
+    redis.hgetall key(id), (err, hash) ->
+      recipe = hash
+    redis.lrange ingredients(id), 0, -1, (err, ing) ->
+      recipe.ingredients = ing
+      res.send recipe
 
   app.post '/api/recipes', (req, res) ->
     redis.incr 'id:recipe', (err, id) ->

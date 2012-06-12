@@ -26,6 +26,11 @@ function program1(depth0,data) {
   buffer += escapeExpression(stack1) + "</li>\n  ";
   return buffer;}
 
+function program3(depth0,data) {
+  
+  
+  return "\n<p>Hey</p>\n";}
+
   buffer += "<h2>";
   foundHelper = helpers.name;
   stack1 = foundHelper || depth0.name;
@@ -42,6 +47,17 @@ function program1(depth0,data) {
   else { stack1 = blockHelperMissing.call(depth0, stack1, tmp1); }
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n</ul>\n";
+  stack1 = helpers.temt;
+  tmp1 = self.program(3, program3, data);
+  tmp1.hash = {};
+  tmp1.fn = tmp1;
+  tmp1.inverse = self.noop;
+  stack1 = stack1.call(depth0, tmp1);
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n";
+  stack1 = helpers.test;
+  stack1 = stack1.call(depth0, { hash: {} });
+  buffer += escapeExpression(stack1) + "\n";
   return buffer;});
 templates['recipeForm'] = template(function (Handlebars,depth0,helpers,partials,data) {
   helpers = helpers || Handlebars.helpers;
@@ -53,7 +69,12 @@ templates['recipeForm'] = template(function (Handlebars,depth0,helpers,partials,
   stack1 = foundHelper || depth0.name;
   if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
   else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "name", { hash: {} }); }
-  buffer += escapeExpression(stack1) + "' />\n<ul id=\"newIngredients\"></ul>\n<input id=\"save\" type=\"button\" value=\"Save\" />\n";
+  buffer += escapeExpression(stack1) + "' />\n<ul id=\"newIngredients\"></ul>\n<input id=\"rating\" placeholder=\"1-5\" type=\"number\" value=\"";
+  foundHelper = helpers.rating;
+  stack1 = foundHelper || depth0.rating;
+  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
+  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "rating", { hash: {} }); }
+  buffer += escapeExpression(stack1) + "\" />\n<input id=\"save\" type=\"button\" value=\"Save\" />\n";
   return buffer;});
 templates['recipeView'] = template(function (Handlebars,depth0,helpers,partials,data) {
   helpers = helpers || Handlebars.helpers;

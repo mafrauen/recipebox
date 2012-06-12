@@ -48,6 +48,7 @@ class RecipeListView extends Backbone.View
     @
 
   clicked: =>
+    @model.fetch()
     @model.trigger 'recipe:selected', @model
 
   showActive: =>

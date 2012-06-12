@@ -35,6 +35,7 @@ To learn more about Backbone and other client side technologies.
   * Sorted set for all recipes
   * Making recipe increments score
   * Changing recipe rating appropriately adjusts score
+  * Don't show rating if not 1 to 5
 * Styling
 * Add field for location (cookbook page or link)
 * Discard edit
