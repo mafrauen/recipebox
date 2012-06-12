@@ -38,6 +38,7 @@ app.configure('production', function(){
 });
 
 // Routes
+require('./routes/staticPages')(app);
 require('./routes/recipe')(app, client);
 
 app.listen(3000, function(){

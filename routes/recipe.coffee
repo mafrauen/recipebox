@@ -2,15 +2,9 @@ recipe = (app, redis) =>
 
   key = (id) ->
     "recipe:#{id}"
-  ingredients = (id) ->
+  keyIngredients = (id) ->
     "#{key(id)}:ingredients"
 
-  renderApp = (req, res) ->
-    res.render 'index', title: 'My Recipes'
-
-  app.get '/', renderApp
-  app.get '/recipes/new', renderApp
-  app.get '/recipes/:id', renderApp
 
   app.get '/api/recipes', (req, res) ->
     redis.zrevrange 'recipes', 0, -1, (err, ids) ->
@@ -19,54 +13,54 @@ recipe = (app, redis) =>
       command.exec (err, recipes) ->
         res.send recipes
 
+
   app.get '/api/recipes/:id', (req, res) ->
     id = req.params.id
     redis.hgetall key(id), (err, hash) ->
       recipe = hash
-    redis.lrange ingredients(id), 0, -1, (err, ing) ->
+    redis.lrange keyIngredients(id), 0, -1, (err, ing) ->
       recipe.ingredients = ing
       res.send recipe
 
+
   app.post '/api/recipes', (req, res) ->
+    rating = 0 # TODO
     redis.incr 'id:recipe', (err, id) ->
-      key = "recipe:#{id}"
       recipe =
         id: id
         name: req.body.name
-      redis.hmset key, recipe
+        rating: rating
+        made: 0 # TODO
+      redis.hmset key(id), recipe
 
-      redis.rpush "#{key}:ingredients", req.body.ingredients
-      redis.sadd "recipes", id
-
-      recipe.ingredients = req.body.ingredients
-      recipes.push recipe
+      redis.rpush keyIngredients(id), req.body.ingredients
+      redis.zadd "recipes", rating, id
 
       #return to backbone any attributes that changed on the server
-      res.send id: id
+      res.send
+        id: id
+        ingredients: req.body.ingredients
 
 
   app.put '/api/recipes/:id', (req, res) ->
     id = req.params.id
-    key = "recipe:#{id}"
+    name = req.body.name
+    ingredients = req.body.ingredients
 
-    redis.hset key, 'name', req.body.name
-    ingKey = "#{key}:ingredients"
-    redis.del ingKey
-    redis.rpush ingKey, req.body.ingredients
+    redis.hset key(id), 'name', name
+    redis.del keyIngredients(id)
+    redis.rpush keyIngredients(id), ingredients
+    # TODO rating
 
-    for recipe in recipes when recipe.id is id
-      recipe.name = req.body.name
-      recipe.ingredients = req.body.ingredients
-
-    res.send {}
+    res.send
+      name: name
+      ingredients: ingredients
 
 
   app.delete '/api/recipes/:id', (req, res) ->
     id = req.params.id
-    redis.srem 'recipes', 0, id
-    redis.del "recipe:#{id}", "recipe:#{id}:ingredients"
+    redis.zrem 'recipes', id
+    redis.del key(id), keyIngredients(id)
 
-    index = idx for rec, idx in recipes when rec.id is id
-    recipes.splice index, 1
 
 module.exports = recipe
