@@ -23,7 +23,6 @@ app.configure(function(){
     secret: 'this is my secret'
    ,store: new RedisStore({client: client})
   }));
-  app.use(require('stylus').middleware({ src: __dirname + '/public' }));
   app.use(require('connect-assets')());
   app.use(app.router);
   app.use(express.static(__dirname + '/public'));

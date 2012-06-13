@@ -1,5 +1,6 @@
 class CookbookView extends Backbone.View
   tagName: 'ul'
+  className: 'nav nav-list'
 
   initialize: ->
     @collection.bind 'add', @renderOne
@@ -45,6 +46,7 @@ class RecipeListView extends Backbone.View
 
     @$el.html @template
       name: name
+    @$('.remove').tooltip title: 'Remove'
     @
 
   clicked: =>

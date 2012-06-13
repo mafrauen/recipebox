@@ -1,0 +1,55 @@
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  padding-top: 40px;
+}
+
+#newRecipe {
+  @newWidth: 75%;
+  width: @newWidth;
+  margin-bottom: 20px;
+  margin-left: (100% - @newWidth) / 2;
+}
+
+#recipes {
+  li {
+    cursor: pointer;
+
+    &.recipe {
+      height: 50px;
+      padding: 0 15px;
+      line-height: 50px;
+      border-bottom: 1px solid #d2d2d1;
+
+      &:last-child { border-bottom: 0; }
+
+      &.active { background: #94e5ec; }
+
+      .remove { display: none; }
+
+      &:hover .remove,
+      &.active .remove {
+        display: inline-block;
+        float: right;
+        margin-top: 18px;
+      }
+    }
+  }
+}
+
+#newIngredients {
+  .control-label {
+    display: none;
+  }
+
+  li {
+    margin-top: 3px;
+
+    &:first-child {
+      margin-top: 20px;
+
+      .control-label {
+        display: block;
+      }
+    }
+  }
+}

@@ -6,7 +6,7 @@ class RecipeList extends Backbone.Router
 
   initialize: =>
     @cookbook = new Cookbook()
-    @cookbookView = new CookbookView el: '#recipes', collection: @cookbook
+    @cookbookView = new CookbookView  collection: @cookbook
     @detailView = new RecipeDetailView collection: @cookbook
     @headerView = new HeaderView collection: @cookbook
 
@@ -15,18 +15,18 @@ class RecipeList extends Backbone.Router
       @navigate "recipes/#{recipe.get 'id'}" if recipe.get 'id'
     @cookbook.on 'add', =>
       document.title = 'New Recipe'
-      @navigate 'recipes/new'#, replace: true
+      @navigate 'recipes/new'
 
 
   list: =>
-    $('#header').html @headerView.render().el
     $('#content').html @detailView.render().el
-    @cookbookView.render()
+    $('#recipes').html @cookbookView.render().el
+    $('#recipes').prepend @headerView.render().el
 
   newRecipe: =>
-    $('#header').html @headerView.render().el
     $('#content').html @detailView.render().el
-    @cookbookView.render()
+    $('#recipes').html @cookbookView.render().el
+    $('#recipes').prepend @headerView.render().el
 
     # we don't want to do this when navigating, right?
     recipe = new Recipe
@@ -34,9 +34,9 @@ class RecipeList extends Backbone.Router
     recipe.trigger 'recipe:selected', recipe
 
   show: (id) =>
-    $('#header').html @headerView.render().el
     $('#content').html @detailView.render().el
-    @cookbookView.render()
+    $('#recipes').html @cookbookView.render().el
+    $('#recipes').prepend @headerView.render().el
 
     recipe = @cookbook.get id
     recipe.trigger 'recipe:selected', recipe

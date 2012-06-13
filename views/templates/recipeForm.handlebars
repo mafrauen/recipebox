@@ -1,4 +1,14 @@
-<input id="name" type="text" placeholder='Recipe Name' value='{{name}}' />
-<ul id="newIngredients"></ul>
-<input id="rating" placeholder="1-5" type="number" value="{{rating}}" />
-<input id="save" type="button" value="Save" />
+<form class="form-horizontal">
+  <fieldset>
+    <legend>Edit Recipe:</legend>
+    <label for="name" class="control-label">Name:</label>
+    <div class="controls">
+      <input id="name" class='input-xlarge' type="text" placeholder='Recipe Name' value='{{name}}' />
+    </div>
+    <ul id="newIngredients" class='unstyled'></ul>
+    <div class="form-actions">
+      <button id='save' class="btn btn-primary">Save</button>
+      <button class="btn">Cancel</button>
+    </div>
+  </fieldset>
+</form>

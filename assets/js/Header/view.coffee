@@ -1,9 +1,13 @@
 class HeaderView extends Backbone.View
+  tagName: 'button'
+  id: 'newRecipe'
+  className: 'btn btn-large'
+
   events:
-    'click button': 'newRecipe'
+    'click': 'newRecipe'
 
   render: =>
-    @$el.html "<button id='newRecipe'>New Recipe</button>"
+    @$el.html 'New Recipe'
     @
 
   newRecipe: =>
