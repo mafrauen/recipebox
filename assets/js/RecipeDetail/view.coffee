@@ -5,6 +5,7 @@ class RecipeDetailView extends Backbone.View
   initialize: ->
     @collection.on 'add', @new
     @collection.on 'recipe:selected sync', @show
+    @collection.on 'recipe:discard', @show
     @collection.on 'destroy', @clear
     @collection.on 'recipe:edit', @edit
 
@@ -49,14 +50,23 @@ class ShowRecipeView extends Backbone.View
 
 
 class RecipeFormView extends Backbone.View
+  keys:
+    backspace: 8
+    tab: 9
+    enter: 13
+    esc: 27
+
   template: Handlebars.templates.recipeForm
 
   events:
     'click #save': 'save'
+    'click #cancel': 'cancel'
     'keyup .ingredient': 'ingredientType'
     'keyup #name': 'changeName'
 
   render: =>
+    $('body').keyup (e) =>
+      @cancel() if e.keyCode is @keys.esc
     @$el.html @template @model.toJSON()
     @
 
@@ -65,10 +75,9 @@ class RecipeFormView extends Backbone.View
     @model.set name: name
 
   ingredientType: (e) =>
-    enter = 13; backspace = 8; tab = 9
     switch e.keyCode
-      when enter then @save()
-      when backspace, tab # then do nothing
+      when @keys.enter then @save()
+      when @keys.backspace, @keys.tab # then do nothing
       else @cleanIngredients()
 
   cleanIngredients: =>
@@ -92,6 +101,11 @@ class RecipeFormView extends Backbone.View
     ingredients = (@$(el).val().trim() for el in @$('.ingredient') when @$(el).val().trim().length > 0)
     @model.save ingredients: ingredients
 
+  cancel: =>
+    if @model.isNew()
+      @model.destroy()
+    else
+      @model.trigger 'recipe:discard', @model
 
 class NewRecipeView extends RecipeFormView
   render: =>

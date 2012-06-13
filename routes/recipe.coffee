@@ -5,7 +5,6 @@ recipe = (app, redis) =>
   keyIngredients = (id) ->
     "#{key(id)}:ingredients"
 
-
   app.get '/api/recipes', (req, res) ->
     redis.zrevrange 'recipes', 0, -1, (err, ids) ->
       command = redis.multi()

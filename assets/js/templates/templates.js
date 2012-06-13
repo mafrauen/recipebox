@@ -63,7 +63,7 @@ templates['recipeForm'] = template(function (Handlebars,depth0,helpers,partials,
   stack1 = foundHelper || depth0.name;
   if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
   else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "name", { hash: {} }); }
-  buffer += escapeExpression(stack1) + "' />\n    </div>\n    <ul id=\"newIngredients\" class='unstyled'></ul>\n    <div class=\"form-actions\">\n      <button id='save' class=\"btn btn-primary\">Save</button>\n      <button class=\"btn\">Cancel</button>\n    </div>\n  </fieldset>\n</form>\n";
+  buffer += escapeExpression(stack1) + "' />\n    </div>\n    <ul id=\"newIngredients\" class='unstyled'></ul>\n    <div class=\"form-actions\">\n      <button type='button' id='save' class=\"btn btn-primary\">Save</button>\n      <button type='button' id='cancel' class=\"btn\">Cancel</button>\n    </div>\n  </fieldset>\n</form>\n";
   return buffer;});
 templates['recipeView'] = template(function (Handlebars,depth0,helpers,partials,data) {
   helpers = helpers || Handlebars.helpers;
