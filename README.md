@@ -14,11 +14,13 @@ A simple CRUD app for recipes, like an online cookbook
   * jQuery [site][url_jquery]
   * handlebar templates [site][url_handlebars]
   * HTML5 pushState
+  * Twitter Bootstrap [site][url_bootstrap]
+  * Precompiled CSS with LESS [site][url_less]
 * Both
   * CoffeeScript [site][url_coffeescript]
 * [Redis][url_redis] database with the following data structures:
   * Hash - to store a recipe and top level attributes (name, id, eventually rating, etc.)
-  * Set - to store all recipe ids
+  * Sorted Set - to store all recipe ids, along with a score for how relevant the recipe is
   * List - to store ingredients for a single recipe
   * Value - to hold the next id for a new recipe
 
@@ -32,18 +34,16 @@ To learn more about Backbone and other client side technologies.
 # TODO
 * Ratings
   * Per recipe
-  * Sorted set for all recipes
   * Making recipe increments score
   * Changing recipe rating appropriately adjusts score
+  * Only show rating after recipe has been made
   * Don't show rating if not 1 to 5
-* Styling
 * Add field for location (cookbook page or link)
 * Discard edit
   * On cancel button or esc
   * Just fetch recipe again?
 * Recipe Search
   * By name or ingredient
-* Remove cache
 * Store raw ingredients
   * Determine which is gluten free
 
@@ -54,6 +54,8 @@ To learn more about Backbone and other client side technologies.
 [url_backbone]: http://www.backbonejs.org
 [url_jquery]: http://www.jquery.com
 [url_handlebars]: http://handlebarsjs.com/
+[url_bootstrap]: http://twitter.github.com/bootstrap
+[url_less]: http://lesscss.org
 [url_coffeescript]: http://www.coffeescript.org
 [url_redis]: http://redis.io
 [url_nodejitsu]: http://www.nodejitsu.com
