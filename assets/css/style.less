@@ -11,20 +11,19 @@ body {
   margin-left: @headerMarginLeft;
 }
 
-@inputWidth: @newWidth * .60;
-@searchWidth: @newWidth * .27;
-@dropdownWidth: @newWidth * .10;
 .input-append.btn-group {
   input[type='text'] {
     float: left;
-    width: @inputWidth;
+    width: 60%;
     margin-left: @headerMarginLeft;
+    padding-left: 0;
+    padding-right: 0;
   }
   .search {
-    width: @searchWidth;
+    display: none;
   }
   .dropdown-toggle {
-    width: @dropdownWidth;
+    width: 15%;
   }
   .dropdown-menu {
     width: @newWidth;
