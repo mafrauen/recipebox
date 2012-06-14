@@ -1,9 +1,12 @@
 class RecipeDetailView extends Backbone.View
   className: 'hero-unit'
-  template: '<h1>Choose a recipe!<br><small>Or create a new one</small></h1>'
+  template: Handlebars.templates.instructions
+
+  events:
+    'click .newRecipe': 'addNew'
 
   initialize: ->
-    @collection.on 'add', @new
+    @collection.on 'add', @newRecipe
     @collection.on 'recipe:selected sync', @show
     @collection.on 'recipe:discard', @show
     @collection.on 'destroy', @clear
@@ -11,14 +14,17 @@ class RecipeDetailView extends Backbone.View
 
   render: =>
     @visible = null
-    @$el.html @template
+    @$el.html @template()
     @
 
   show: (recipe) =>
     @visible = recipe
     @$el.html new ShowRecipeView(model: recipe).render().el if recipe.get 'id'
 
-  new: (recipe) =>
+  addNew: =>
+    @collection.add new Recipe
+
+  newRecipe: (recipe) =>
     @visible = recipe
     @$el.html new NewRecipeView(model: recipe).render().el
     @$('#name').focus()

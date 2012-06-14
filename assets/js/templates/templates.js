@@ -15,13 +15,19 @@ templates['ingredientForm'] = template(function (Handlebars,depth0,helpers,parti
   stack1 = foundHelper || depth0.index;
   if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
   else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "index", { hash: {} }); }
-  buffer += escapeExpression(stack1) + "\" placeholder=\"Ingredients\" type=\"text\" class=\"input-xlarge ingredient\" value='";
+  buffer += escapeExpression(stack1) + "\" placeholder=\"Ingredient\" type=\"text\" class=\"input-xlarge ingredient\" value='";
   foundHelper = helpers.ingredient;
   stack1 = foundHelper || depth0.ingredient;
   if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
   else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "ingredient", { hash: {} }); }
   buffer += escapeExpression(stack1) + "'/>\n</div>\n";
   return buffer;});
+templates['instructions'] = template(function (Handlebars,depth0,helpers,partials,data) {
+  helpers = helpers || Handlebars.helpers;
+  var foundHelper, self=this;
+
+
+  return "<h1>RecipeBox<br>\n  <small>Choose a recipe, or <span class='newRecipe'>create a new one!</span></small>\n</h1>\n";});
 templates['recipeDetail'] = template(function (Handlebars,depth0,helpers,partials,data) {
   helpers = helpers || Handlebars.helpers;
   var buffer = "", stack1, foundHelper, tmp1, self=this, functionType="function", helperMissing=helpers.helperMissing, undef=void 0, escapeExpression=this.escapeExpression, blockHelperMissing=helpers.blockHelperMissing;

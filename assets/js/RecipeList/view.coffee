@@ -5,6 +5,8 @@ class CookbookView extends Backbone.View
   initialize: ->
     @collection.bind 'add', @renderOne
     @collection.bind 'reset', @renderAll
+    @collection.bind 'destroy', @removeOne
+    @views = []
 
   render: =>
     @$el.empty()
@@ -12,9 +14,11 @@ class CookbookView extends Backbone.View
     @
 
   renderOne: (recipe) =>
-    el = @newListView(recipe).render().el
+    view = @newListView recipe
+    el = view.render().el
     @$el.append el
     @scrollTo el
+    view.showActive()
 
   scrollTo: (el) =>
     #http://stackoverflow.com/questions/2905867/how-to-scroll-to-specific-item-using-jquery
@@ -24,7 +28,12 @@ class CookbookView extends Backbone.View
     @$el.append @newListView(recipe).render().el for recipe in collection.models
 
   newListView: (recipe) =>
-    new RecipeListView model: recipe
+    view = new RecipeListView model: recipe
+    @views.push view
+    return view
+
+  removeOne: (recipe) =>
+    view.remove() for view in @views when view.model is recipe
 
 
 class RecipeListView extends Backbone.View
@@ -34,7 +43,6 @@ class RecipeListView extends Backbone.View
 
   events:
     'click': 'clicked'
-    'click .remove': 'clear'
 
   initialize: =>
     @model.bind 'change:name', @render
@@ -49,17 +57,20 @@ class RecipeListView extends Backbone.View
     @$('.remove').tooltip title: 'Remove'
     @
 
-  clicked: =>
-    @model.fetch()
-    @model.trigger 'recipe:selected', @model
+  clicked: (e) =>
+    if 'remove' in e.target.classList
+      @clear()
+    else
+      @model.fetch()
+      @model.trigger 'recipe:selected', @model
 
   showActive: =>
     $('.recipe.active').removeClass 'active'
     @$el.addClass 'active'
 
   clear: =>
+    @$('.remove').tooltip 'hide'
     @model.destroy()
-    @remove()
 
 
 window.CookbookView = CookbookView

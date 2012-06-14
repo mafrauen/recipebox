@@ -10,6 +10,13 @@ body {
   margin-left: (100% - @newWidth) / 2;
 }
 
+#content {
+  .newRecipe {
+    cursor: pointer;
+    border-bottom: 1px dashed #888888;
+  }
+}
+
 #recipes {
   li {
     cursor: pointer;
@@ -18,7 +25,7 @@ body {
       height: 50px;
       padding: 0 15px;
       line-height: 50px;
-      border-bottom: 1px solid #d2d2d1;
+      border-bottom: 1px solid #D2D1D1;
 
       &:last-child { border-bottom: 0; }
 
