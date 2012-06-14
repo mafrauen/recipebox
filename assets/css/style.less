@@ -3,11 +3,38 @@ body {
   padding-top: 40px;
 }
 
+@newWidth: 75%;
+@headerMarginLeft: (100 - @newWidth) / 2;
 #newRecipe {
-  @newWidth: 75%;
   width: @newWidth;
   margin-bottom: 20px;
-  margin-left: (100% - @newWidth) / 2;
+  margin-left: @headerMarginLeft;
+}
+
+@inputWidth: @newWidth * .60;
+@searchWidth: @newWidth * .27;
+@dropdownWidth: @newWidth * .10;
+.input-append.btn-group {
+  input[type='text'] {
+    float: left;
+    width: @inputWidth;
+    margin-left: @headerMarginLeft;
+  }
+  .search {
+    width: @searchWidth;
+  }
+  .dropdown-toggle {
+    width: @dropdownWidth;
+  }
+  .dropdown-menu {
+    width: @newWidth;
+    left: @headerMarginLeft;
+  }
+  .checkbox.inline {
+    padding-left: 25px;
+    padding-bottom: 5px;
+    width: 90%;
+  }
 }
 
 #content {

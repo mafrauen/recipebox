@@ -6,7 +6,9 @@ class CookbookView extends Backbone.View
     @collection.bind 'add', @renderOne
     @collection.bind 'reset', @renderAll
     @collection.bind 'destroy', @removeOne
+    @collection.bind 'recipes:filter', @renderFilter
     @views = []
+
 
   render: =>
     @$el.empty()
@@ -25,7 +27,15 @@ class CookbookView extends Backbone.View
     @$el.scrollTop($(el).offset().top - @$el.offset().top + @$el.scrollTop())
 
   renderAll: (collection) =>
-    @$el.append @newListView(recipe).render().el for recipe in collection.models
+    @renderMultiple collection.models
+
+  renderFilter: (recipes) =>
+    @$el.empty()
+    @renderMultiple recipes
+
+  renderMultiple: (recipes) =>
+    @$el.append @newListView(recipe).render().el for recipe in recipes
+
 
   newListView: (recipe) =>
     view = new RecipeListView model: recipe

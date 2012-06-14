@@ -1,7 +1,7 @@
 staticPages = (app) =>
 
   renderApp = (req, res) ->
-    res.render 'index', title: 'My Recipes'
+    res.render 'index', title: 'RecipeBox'
 
   app.get '/', renderApp
   app.get '/recipes/new', renderApp

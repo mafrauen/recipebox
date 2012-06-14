@@ -1,18 +1,26 @@
 class HeaderView extends Backbone.View
-  tagName: 'button'
-  id: 'newRecipe'
-  className: 'btn btn-large'
+  template: Handlebars.templates.header
 
   events:
-    'click': 'newRecipe'
+    'click #newRecipe': 'newRecipe'
+    'keyup #recipeFilter': 'filter'
+    'click .dropdown-menu .checkbox': 'toggleFilterCheck'
 
   render: =>
-    @$el.html 'New Recipe'
+    @$el.html @template()
     @
 
   newRecipe: =>
     recipe = new Recipe
     @collection.add recipe
     recipe.trigger 'recipe:selected', recipe
+
+  toggleFilterCheck: =>
+    @filter()
+
+  filter: =>
+    searchIngredients = @$('#searchIngredients').attr('checked')?
+    text = @$('#recipeFilter').val()
+    @collection.filterBy text, searchIngredients
 
 window.HeaderView = HeaderView

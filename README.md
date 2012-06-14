@@ -19,7 +19,7 @@ A simple CRUD app for recipes, like an online cookbook
 * Both
   * CoffeeScript [site][url_coffeescript]
 * [Redis][url_redis] database with the following data structures:
-  * Hash - to store a recipe and top level attributes (name, id, eventually rating, etc.)
+  * Hash - to store a recipe and top level attributes (name, id, rating, etc.)
   * Sorted Set - to store all recipe ids, along with a score for how relevant the recipe is
   * List - to store ingredients for a single recipe
   * Value - to hold the next id for a new recipe
@@ -32,20 +32,21 @@ The project is hosted with [nodejitsu][url_nodejitsu] here:
 To learn more about Backbone and other client side technologies.
 
 # TODO
+* Recipe Search
+  * Load ingredients on start rather than fetch lazy
 * Ratings
   * Per recipe
   * Making recipe increments score
   * Changing recipe rating appropriately adjusts score
   * Only show rating after recipe has been made
-  * Don't show rating if not 1 to 5
+* Validation that recipe has name and at least one ingredient
 * Add field for location (cookbook page or link)
-* Discard edit
-  * On cancel button or esc
-  * Just fetch recipe again?
-* Recipe Search
-  * By name or ingredient
 * Store raw ingredients
   * Determine which is gluten free
+* Add to menu
+  * Need more information about menu templates, etc.
+* Multiple users
+* Login with facebook, twitter
 
 [url_node]: http://www.nodejs.org
 [url_express]: http://www.expressjs.com
