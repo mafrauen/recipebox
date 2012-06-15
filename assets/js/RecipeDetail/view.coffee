@@ -71,18 +71,18 @@ class RecipeFormView extends Backbone.View
     'keyup #name': 'changeName'
 
   render: =>
-    $('body').keyup (e) =>
-      @cancel() if e.keyCode is @keys.esc
     @$el.html @template @model.toJSON()
     @
 
-  changeName: =>
+  changeName: (e) =>
+    @cancel() if e.keyCode is @keys.esc
     name = @$('#name').val().trim()
     @model.set name: name
 
   ingredientType: (e) =>
     switch e.keyCode
       when @keys.enter then @save()
+      when @keys.esc then @cancel()
       when @keys.backspace, @keys.tab # then do nothing
       else @cleanIngredients()
 

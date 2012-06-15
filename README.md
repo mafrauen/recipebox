@@ -34,6 +34,8 @@ To learn more about Backbone and other client side technologies.
 # TODO
 * Recipe Search
   * Load ingredients on start rather than fetch lazy
+  * press esc to clear
+    * make sure that doesn't affect esc for editing
 * Ratings
   * Per recipe
   * Making recipe increments score

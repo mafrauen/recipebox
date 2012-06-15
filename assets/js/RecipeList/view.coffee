@@ -7,8 +7,9 @@ class CookbookView extends Backbone.View
     @collection.bind 'reset', @renderAll
     @collection.bind 'destroy', @removeOne
     @collection.bind 'recipes:filter', @renderFilter
+    @collection.bind 'recipe:selected', @recipeSelected
+    @currentlyShown = null
     @views = []
-
 
   render: =>
     @$el.empty()
@@ -34,8 +35,13 @@ class CookbookView extends Backbone.View
     @renderMultiple recipes
 
   renderMultiple: (recipes) =>
-    @$el.append @newListView(recipe).render().el for recipe in recipes
+    for recipe in recipes
+      view = @newListView recipe
+      @$el.append view.render().el
+      recipe.trigger('recipe:selected', recipe) if recipe is @currentlyShown
 
+  recipeSelected: (recipe) =>
+    @currentlyShown = recipe
 
   newListView: (recipe) =>
     view = new RecipeListView model: recipe
@@ -44,6 +50,7 @@ class CookbookView extends Backbone.View
 
   removeOne: (recipe) =>
     view.remove() for view in @views when view.model is recipe
+    @currentlyShown = null if recipe is @currentlyShown
 
 
 class RecipeListView extends Backbone.View

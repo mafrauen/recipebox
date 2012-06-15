@@ -5,7 +5,7 @@ templates['header'] = template(function (Handlebars,depth0,helpers,partials,data
   var foundHelper, self=this;
 
 
-  return "<button id='newRecipe' class='btn btn-large'>New Recipe</button>\n\n<div class=\"input-append btn-group\">\n  <input id='recipeFilter' type=\"text\"><button class=\"btn search\" type='button'>Search</button><button class='btn dropdown-toggle' data-toggle='dropdown'><span class=\"caret\"></span></button>\n  <ul class=\"dropdown-menu\">\n    <li><label class=\"checkbox inline\"><input id='searchIngredients' type=\"checkbox\" checked>Search ingredients</label></li>\n  </ul>\n</div>\n";});
+  return "<button id='newRecipe' class='btn btn-large'>New Recipe</button>\n\n<div class=\"input-append btn-group\">\n  <input id='recipeFilter' type=\"text\"><button class=\"btn search\" type='button'>Search</button><button class=\"btn clearSearch\" type='button'><i class='icon-remove' /></button><button class='btn dropdown-toggle' data-toggle='dropdown'><span class=\"caret\"></span></button>\n  <ul class=\"dropdown-menu\">\n    <li><label class=\"checkbox inline\"><input id='searchIngredients' type=\"checkbox\" checked>Search ingredients</label></li>\n  </ul>\n</div>\n";});
 templates['ingredientForm'] = template(function (Handlebars,depth0,helpers,partials,data) {
   helpers = helpers || Handlebars.helpers;
   var buffer = "", stack1, foundHelper, self=this, functionType="function", helperMissing=helpers.helperMissing, undef=void 0, escapeExpression=this.escapeExpression;
