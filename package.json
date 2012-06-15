@@ -1,6 +1,6 @@
 {
   "name": "recipebox",
-  "version": "0.0.7-1",
+  "version": "0.0.7-2",
   "private": true,
   "dependencies": {
     "express": "2.5.8",
