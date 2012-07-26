@@ -70,6 +70,10 @@ class RecipeFormView extends Backbone.View
     'keyup .ingredient': 'ingredientType'
     'keyup #name': 'changeName'
 
+  initialize: (options) =>
+    @initialName = options.model && options.model.get 'name' || ''
+
+
   render: =>
     @$el.html @template @model.toJSON()
     @
@@ -105,12 +109,14 @@ class RecipeFormView extends Backbone.View
 
   save: =>
     ingredients = (@$(el).val().trim() for el in @$('.ingredient') when @$(el).val().trim().length > 0)
-    @model.save ingredients: ingredients
+    @model.save
+      ingredients: ingredients
 
   cancel: =>
     if @model.isNew()
       @model.destroy()
     else
+      @model.set name: @initialName
       @model.trigger 'recipe:discard', @model
 
 class NewRecipeView extends RecipeFormView

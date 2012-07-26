@@ -30,10 +30,11 @@ recipe = (app, redis) =>
         name: req.body.name
         rating: rating
         made: 0 # TODO
+        location: ''
       redis.hmset key(id), recipe
 
       redis.rpush keyIngredients(id), req.body.ingredients
-      redis.zadd "recipes", rating, id
+      redis.zadd 'recipes', rating, id
 
       #return to backbone any attributes that changed on the server
       res.send
